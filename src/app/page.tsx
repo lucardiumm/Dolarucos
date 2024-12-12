@@ -33,11 +33,13 @@ export default function Page() {
                         setCompra(item.compra)
                         setVenta(item.venta)
                         setFechaActualizacion(item.fechaActualizacion)
+
+                        console.log(tabs)
                     }
                 })
             }
         })
-    }, [dollars, tipo])
+    }, [dollars, tipo, tabs])
 
     if (!dollars) return 
 
@@ -86,7 +88,11 @@ export default function Page() {
                         <p className={'font-bold mr-auto ml-7 text-dark text-lg'}>{to === SWITCH.ARG ? `${compra} ARS` : `${venta} ARS`}</p>
 
                         <button onClick={() => {
-                            to === SWITCH.ARG ? setTo(SWITCH.USA) : setTo(SWITCH.ARG)
+                            if (to === SWITCH.ARG) {
+                                setTo(SWITCH.USA)
+                            } else {
+                                setTo(SWITCH.ARG)
+                            }
                         }} className={'px-2 py-2 rounded-full border border-light'}>
                             <IoIosSwap size={22.5} className={'text-darkgray'} />
                         </button>
