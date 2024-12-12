@@ -5,9 +5,9 @@ import ARG from '$/public/images/ARG.png'
 import USA from '$/public/images/USA.png'
 import useDollars from '$/hooks/useDollars'
 import { IoIosSwap } from 'react-icons/io'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ReactApexChart from 'react-apexcharts'
-import { data } from '$/extra/config'
+import { data, list } from '$/extra/config'
 import { Tabs, TabsList, TabsTrigger } from '../components/ui/tabs'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select'
 
@@ -18,8 +18,24 @@ enum SWITCH {
 export default function Page() {
     const dollars = useDollars()
 
-    const [to, setTo] = useState<SWITCH>(SWITCH.ARG)
+    const [to, setTo] = useState<SWITCH>(SWITCH.USA)
     const [tabs, setTabs] = useState('')
+    const [compra, setCompra] = useState(0)
+    const [venta, setVenta] = useState(0)
+    const [fechaActualizacion, setFechaActualizacion] = useState('')
+    const [tipo, setTipo] = useState('oficial')
+
+    useEffect(() => {
+        if (tipo === 'oficial') {
+            dollars.forEach(item => {
+                if (item.casa === tipo) {
+                    setCompra(item.compra)
+                    setVenta(item.venta)
+                    setFechaActualizacion(item.fechaActualizacion)
+                }
+            })
+        }
+    }, [dollars, tipo])
 
     if (!dollars) return 
 
@@ -28,7 +44,7 @@ export default function Page() {
             <div className={'flex flex-col flex-1 w-screen h-screen justify-center items-center content-center bg-white'}>
                 <div className={'flex flex-col absolute top-1/4 gap-2 w-4/5 h-1/2'}>
                     <div className={'text-darkGray flex flex-row gap-3 items-center content-center'}>
-                        <b>1 USD</b>
+                        <b>{to === SWITCH.ARG ? '1 ARS' : '1 USD'}</b>
 
                         <Select>
                             <SelectTrigger className={'outline-none w-32'}>
@@ -47,22 +63,22 @@ export default function Page() {
                     <div className={'flex flex-row justify-between items-center content-center'}>
                         <div className={'flex flex-row'}>
                             <Image
-                                src={USA}
-                                alt={'USA'}
+                                src={to === SWITCH.USA ? USA : ARG}
+                                alt={'FLAG'}
                                 width={500}
                                 height={500}
                                 className={'rounded-full w-8 border-2 border-white h-8'}
                             />
                             <Image
-                                src={ARG}
-                                alt={'ARG'}
+                                src={to === SWITCH.USA ? ARG : USA}
+                                alt={'FLAG'}
                                 width={500}
                                 height={500}
                                 className={'-mx-3 rounded-full w-8 border-2 border-white h-8'}
                             />
                         </div>
 
-                        <p className={'font-bold mr-auto ml-7 text-dark text-lg'}>1052,86 ARS</p>
+                        <p className={'font-bold mr-auto ml-7 text-dark text-lg'}>{to === SWITCH.ARG ? `${venta} USD` : `${compra} ARS`}</p>
 
                         <button onClick={() => {
                             to === SWITCH.ARG ? setTo(SWITCH.USA) : setTo(SWITCH.ARG)
@@ -71,7 +87,7 @@ export default function Page() {
                         </button>
                     </div>
 
-                    <p className={'text-normalGray'}>Actualizado hace 32 segundos</p>
+                    <p className={'text-normalGray'}>Actualizado hace {new Date().getSeconds() - new Date(fechaActualizacion).getSeconds()} segundos</p>
                 </div>
 
                 <ReactApexChart type={'area'} series={data.series} options={data.options} />
@@ -80,11 +96,9 @@ export default function Page() {
                     setTabs(value)
                 }} defaultValue={'1d'}>
                     <TabsList>
-                        <TabsTrigger value={'1d'}>1d</TabsTrigger>
-                        <TabsTrigger value={'1w'}>1w</TabsTrigger>
-                        <TabsTrigger value={'1m'}>1m</TabsTrigger>
-                        <TabsTrigger value={'1y'}>1y</TabsTrigger>
-                        <TabsTrigger value={'All'}>All</TabsTrigger>
+                        {list.map((item, index) => (
+                            <TabsTrigger key={index} value={item.name}>{item.name}</TabsTrigger>
+                        ))}
                     </TabsList>
                 </Tabs>
             </div>

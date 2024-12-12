@@ -4,6 +4,24 @@ export const config = {
     }
 }
 
+export const list = [
+    {
+        name: '1d',
+    },
+    {
+        name: '1w',
+    },
+    {
+        name: '1m',
+    },
+    {
+        name: '1y',
+    },
+    {
+        name: 'All',
+    },
+]
+
 export const data = {
     series: [
         {
