@@ -7,7 +7,7 @@ import useDollars from '$/hooks/useDollars'
 import { IoIosSwap } from 'react-icons/io'
 import { useEffect, useState } from 'react'
 import ReactApexChart from 'react-apexcharts'
-import { data, list } from '$/extra/config'
+import { data, dollarsList, list } from '$/extra/config'
 import { Tabs, TabsList, TabsTrigger } from '../components/ui/tabs'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select'
 
@@ -26,15 +26,17 @@ export default function Page() {
     const [tipo, setTipo] = useState('oficial')
 
     useEffect(() => {
-        if (tipo === 'oficial') {
-            dollars.forEach(item => {
-                if (item.casa === tipo) {
-                    setCompra(item.compra)
-                    setVenta(item.venta)
-                    setFechaActualizacion(item.fechaActualizacion)
-                }
-            })
-        }
+        dollarsList.forEach(value => {
+            if (tipo === value.tipo) {
+                dollars.forEach(item => {
+                    if (item.casa === tipo) {
+                        setCompra(item.compra)
+                        setVenta(item.venta)
+                        setFechaActualizacion(item.fechaActualizacion)
+                    }
+                })
+            }
+        })
     }, [dollars, tipo])
 
     if (!dollars) return 
@@ -44,9 +46,12 @@ export default function Page() {
             <div className={'flex flex-col flex-1 w-screen h-screen justify-center items-center content-center bg-white'}>
                 <div className={'flex flex-col absolute top-1/4 gap-2 w-4/5 h-1/2'}>
                     <div className={'text-darkGray flex flex-row gap-3 items-center content-center'}>
-                        <b>{to === SWITCH.ARG ? '1 ARS' : '1 USD'}</b>
+                        <b>1 USD</b>
 
-                        <Select>
+                        <Select onValueChange={(value) => {
+                            console.log(value)
+                            setTipo(value)
+                        }}>
                             <SelectTrigger className={'outline-none w-32'}>
                                 <SelectValue placeholder={'Oficial'}></SelectValue>
                             </SelectTrigger>
@@ -63,14 +68,14 @@ export default function Page() {
                     <div className={'flex flex-row justify-between items-center content-center'}>
                         <div className={'flex flex-row'}>
                             <Image
-                                src={to === SWITCH.USA ? USA : ARG}
+                                src={USA}
                                 alt={'FLAG'}
                                 width={500}
                                 height={500}
                                 className={'rounded-full w-8 border-2 border-white h-8'}
                             />
                             <Image
-                                src={to === SWITCH.USA ? ARG : USA}
+                                src={ARG}
                                 alt={'FLAG'}
                                 width={500}
                                 height={500}
@@ -78,7 +83,7 @@ export default function Page() {
                             />
                         </div>
 
-                        <p className={'font-bold mr-auto ml-7 text-dark text-lg'}>{to === SWITCH.ARG ? `${venta} USD` : `${compra} ARS`}</p>
+                        <p className={'font-bold mr-auto ml-7 text-dark text-lg'}>{to === SWITCH.ARG ? `${compra} ARS` : `${venta} ARS`}</p>
 
                         <button onClick={() => {
                             to === SWITCH.ARG ? setTo(SWITCH.USA) : setTo(SWITCH.ARG)

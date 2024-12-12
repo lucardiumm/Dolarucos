@@ -22,6 +22,30 @@ export const list = [
     },
 ]
 
+export const dollarsList = [
+    {
+        tipo: 'oficial',
+    },
+    {
+        tipo: 'blue',
+    },
+    {
+        tipo: 'contadoconliqui',
+    },
+    {
+        tipo: 'mayorista',
+    },
+    {
+        tipo: 'cripto',
+    },
+    {
+        tipo: 'bolsa',
+    },
+    {
+        tipo: 'tarjeta',
+    },
+]
+
 export const data = {
     series: [
         {
