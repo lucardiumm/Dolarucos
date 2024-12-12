@@ -72,6 +72,7 @@ export const data = {
     options: {
         chart: {
             type: 'area',
+            // width: '100%',
             zoom: {
                 enabled: false,
             },

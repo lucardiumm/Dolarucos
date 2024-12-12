@@ -44,7 +44,7 @@ export default function Page() {
     return (
         <>
             <div className={'flex flex-col flex-1 w-screen h-screen justify-center items-center content-center bg-white'}>
-                <div className={'flex flex-col absolute top-1/4 gap-2 w-4/5 h-1/2'}>
+                <div className={'flex flex-col absolute top-1/4 gap-2 w-4/5 h-1/2 md:w-1/4 md:h-1/3'}>
                     <div className={'text-darkGray flex flex-row gap-3 items-center content-center'}>
                         <b>1 USD</b>
 
