@@ -7,7 +7,7 @@ export default function Header() {
     const router = useRouter()
 
     const Redirect = () => {
-        router.push('https://github.com/lucardiumm/dolarucos')
+        router.push('https://github.com/lucardiumm/Dolarucos')
     }
 
     return (
