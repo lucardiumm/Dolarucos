@@ -7,7 +7,7 @@ import useDollars from '$/hooks/useDollars'
 import { IoIosSwap } from 'react-icons/io'
 import { useEffect, useState } from 'react'
 import ReactApexChart from 'react-apexcharts'
-import { data, dollarsList, list } from '$/extra/config'
+import { dollarsList, list, options, series } from '$/extra/config'
 import { Tabs, TabsList, TabsTrigger } from '../components/ui/tabs'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select'
 
@@ -95,7 +95,7 @@ export default function Page() {
                     <p className={'text-normalGray'}>Actualizado hace {new Date().getSeconds() - new Date(fechaActualizacion).getSeconds()} segundos</p>
                 </div>
 
-                <ReactApexChart type={'area'} series={data.series} options={data.options} />
+                <ReactApexChart type={'area'} series={series} options={options} />
 
                 <Tabs onValueChange={(value) => {
                     setTabs(value)
