@@ -7,9 +7,14 @@ import useDollars from '$/hooks/useDollars'
 import { IoIosSwap } from 'react-icons/io'
 import { useEffect, useState } from 'react'
 import ReactApexChart from 'react-apexcharts'
-import { dollarsList, list, options, series } from '$/extra/config'
-import { Tabs, TabsList, TabsTrigger } from '../components/ui/tabs'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select'
+import { dollarsList, list, options, series } from '$/src/Constants/config'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import dynamic from 'next/dynamic'
+
+const Chart = dynamic(() => import('@/components/ui/chart'), {
+    ssr: false
+})
 
 enum SWITCH {
     USA, ARG
@@ -101,7 +106,7 @@ export default function Page() {
                     <p className={'text-normalGray'}>Actualizado hace {new Date().getSeconds() - new Date(fechaActualizacion).getSeconds()} segundos</p>
                 </div>
 
-                <ReactApexChart type={'area'} series={series} options={options} />
+                <Chart />
 
                 <Tabs onValueChange={(value) => {
                     setTabs(value)
