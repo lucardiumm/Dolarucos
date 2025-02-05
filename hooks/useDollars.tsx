@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Dollar } from '$/types/include'
+import { Dollar } from '@/types/include'
 import axios from 'axios'
 
 export default function useDollars() {

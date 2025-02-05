@@ -1,7 +1,7 @@
 export type Dollar = {
-    casa: string;
-    nombre: string;
-    compra: number;
-    venta: number;
-    fechaActualizacion: string;
+    name: string;
+    buy: number;
+    sell: number;
+    spread: number;
+    timestamp: string;
 }
